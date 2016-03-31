@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  event_category_id: 1
+  title: MyString
+  started_at: 2016-03-31 11:48:25
+  ended_at: 2016-03-31 11:48:25
+  date_note: MyText
+  prefecture: MyString
+  place: MyText
+  fee: MyString
+  capacity: MyString
+  entry_note: MyText
+  lecturers: MyText
+  content: MyText
+  contact: MyText
+  organizer: MyText
+  homepage: MyText
+  file: MyString
+  status: MyString
+
+two:
+  id: 1
+  event_category_id: 1
+  title: MyString
+  started_at: 2016-03-31 11:48:25
+  ended_at: 2016-03-31 11:48:25
+  date_note: MyText
+  prefecture: MyString
+  place: MyText
+  fee: MyString
+  capacity: MyString
+  entry_note: MyText
+  lecturers: MyText
+  content: MyText
+  contact: MyText
+  organizer: MyText
+  homepage: MyText
+  file: MyString
+  status: MyString

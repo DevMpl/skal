@@ -1,0 +1,22 @@
+<tr>
+  <td><%= event.title %></td>
+	<td>
+		<% if event.started_at.present? %>
+			<%= ska_datetime_format(event.started_at) %>から<br />
+		<% end %>
+		<% if event.ended_at.present? %>
+			<%= ska_datetime_format(event.ended_at) %>まで
+		<% end %>
+	</td>
+	<td>【<%= event.prefecture %>】<%= event.place %></td>
+	<td class="center aligned">
+		<%= link_to raw('<i class="blue large search icon link icon"></i>'), event_preview_path(event), target: '_blank' %>
+	</td>
+	<td class="center aligned">
+		
+		<%= link_to raw('<i class="green large edit icon link icon"></i>'), edit_event_path(event) %>
+		
+	</td>
+		<td class="center aligned"><%= link_to raw('<i class="red large remove icon link icon"></i>'), event_path(event), method: :delete, data: { confirm: t('message.destroy_confirm') } %>
+	</td>
+</tr>

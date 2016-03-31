@@ -1,0 +1,53 @@
+
+
+<h2 class="ui header">
+  <i class="write icon"></i>
+	イベントカテゴリ一覧
+</h2>
+
+<div class="ui breadcrumb">
+  <%= link_to raw('<i class="home icon"></i>'), '/mng', class: 'section' %>
+  <i class="right chevron icon divider"></i>
+  <div class="section">イベントカテゴリ一覧</div>
+</div>
+
+<div class="ui hidden divider"></div>
+<%= render :partial => 'sub_menu' %>
+
+
+<div class="ui hidden divider"></div>
+<% if @event_categories.present? %>
+
+	  <table class="ui celled padded table">
+	    <thead>
+	      <tr width="100%">
+	        <th class="center aligned" nowrap="nowrap" width="25%"><%= skal_t_ja('event_category.name') %></th>
+	        <th class="center aligned" nowrap="nowrap" width="25%"><%= skal_t_ja('event_category.slug') %></th>
+					<th class="center aligned" width="10%">編集</th>
+	        <th class="center aligned" nowrap="nowrap" width="10%">削除</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% @event_categories.each do |event_category| %>
+				<tr>
+					<td><%= event_category.name %></td>
+					<td><%= event_category.slug %></td>
+					<td class="center aligned">
+						<%= link_to raw('<i class="green large edit icon link icon"></i>'), edit_event_category_path(event_category) %>
+					</td>
+						<td class="center aligned">
+							<%= link_to raw('<i class="red large remove icon link icon"></i>'), event_category_path(event_category), method: :delete, data: { confirm: t('message.destroy_confirm') } %>
+					</td>
+				</tr>
+	      <% end %>
+	    </tbody>
+	  </table>
+
+<% else %>
+<div class="ui message info">
+  記事はありません
+</div>
+<% end %>
+
+<div class="ui hidden divider"></div>
+<%= link_to 'イベントカテゴリ新規登録', new_event_category_path(), class: 'ui primary button' %>

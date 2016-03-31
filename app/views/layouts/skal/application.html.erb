@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <title>Skal::イベント管理</title>
+  <%= stylesheet_link_tag    "skal/application", media: "all" %>
+  <%= javascript_include_tag "skal/application" %>
+  <%= csrf_meta_tags %>
+<%= yield :inline_css %>
+<%= yield :inline_js %>
+</head>
+
+<body>
+  <script>
+    jQuery(function($){
+
+      var prefix = '<%#= Subdomain::Mng.env_path == "mng" ? "/mng" : "" %>';
+
+      var path = location.pathname;
+      var _path = prefix ? path.replace(prefix, '') : path;
+
+      var content = _path.split("/")[1];
+
+      var a = content ? "a[href^='" + prefix + "/" + content + "']" : "a[href='" + prefix + "']";
+
+      $('#global-menu').find(a).addClass('active');
+
+      $('.dropdown').dropdown();
+
+      $('.attached.button').sidebar('setting', 'transition', 'overlay').on('click', function(){
+        $('.left.sidebar').sidebar('toggle');
+      });
+
+    });
+  </script>
+  <style>
+    #main{
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    #message {
+      padding-top: 60px;
+      height: 120px;
+    }
+    label abbr {
+      color: #a94442 !important;
+      font-weight: bold;
+    }
+    .help-inline {
+      color: #a94442;
+    }
+
+    .fixed.button{
+      top: 60px;
+    }
+
+    .main .container{
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .ui.form .error.message{
+      display: block !important;
+    }
+
+    .ui.checkbox label{
+      cursor: pointer;
+    }
+
+  </style>
+
+  <div class="ui fixed inverted main menu">
+    <div class="container">
+      <div class="title item">
+        <%= link_to "sprite", '/' %>
+      </div>
+      <div class="right menu">
+        <div class="ui dropdown item">
+          メニュー
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <%#= link_to("ログアウト", destroy_user_session_path, class: 'item', method: :delete, data: { confirm: 'ログアウトしてよろしいですか？' }) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="ui black big launch right attached fixed button">
+  <div class="ui left vertical inverted sidebar menu">
+    <div class="item">
+      <%= link_to raw('<i class="large home inverted icon"></i>HOME'), '/' %>
+    </div>
+
+    <div class="item">
+      <div class="ui small inverted header"></div>
+      <div class="menu">
+        <%= link_to raw('イベント一覧'), events_path(), {class: 'item'} %>
+        <%= link_to raw('イベント新規作成'), new_event_path(), {class: 'item'} %>
+      </div>
+    </div>
+		
+    <div class="item">
+      <div class="ui small inverted header"></div>
+      <div class="menu">
+        <%= link_to raw('イベントカテゴリ一覧'), event_categories_path(), {class: 'item'} %>
+        <%= link_to raw('イベントカテゴリ新規作成'), new_event_category_path(), {class: 'item'} %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+  <div class="ui centered grid column" id="main">
+    <div class="ui sixteen wide column">
+      <div id="container">
+        <div id="message">
+          <% flash.each do |type, message| -%>
+          <div class="ui <%= skal_get_message_type(type) %> message">
+            <strong><%= message %></strong>
+          </div>
+          <% end %>
+        </div>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

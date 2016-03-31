@@ -1,0 +1,30 @@
+ja:
+  activerecord:
+    attributes:
+      image:
+        image_content_type: 画像は
+        image_file_size: 画像の
+      skal/event:
+        id: ID
+        event_category_id: イベントカテゴリ
+        title: タイトル
+        started_at: 開始時間
+        ended_at: 終了時間
+        date_note: 日程備考
+        prefecture: 県
+        place: 場所
+        fee: 料金
+        capacity: 定員
+        entry_note: 募集備考
+        lecturers: 講師紹介
+        content: イベント詳細
+        contact: 問い合わせ先
+        organizer: 主催者
+        homepage: ホームページ
+        file: 資料1
+        status: ステータス
+      skal/event_category:
+        name: カテゴリ名
+        slug: スラッグ
+        note: メモ
+        status: ステータス

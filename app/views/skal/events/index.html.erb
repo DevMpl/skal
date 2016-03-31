@@ -1,0 +1,104 @@
+<script>
+  jQuery(function($){
+
+    $('#search [type=reset]').on('click', function(){
+      var $target = $(this).closest('form').find('.fields');
+      $target.find('input').attr('value', '');
+
+      $('#q_view_status').dropdown('clear').dropdown('set text', '--');
+    });
+
+    $('select').addClass('ui fluid dropdown').dropdown({placeholder: true});
+
+  });
+</script>
+
+<h2 class="ui header">
+  <i class="write icon"></i>
+	イベント一覧
+</h2>
+
+<div class="ui breadcrumb">
+  <%= link_to raw('<i class="home icon"></i>'), '/mng', class: 'section' %>
+  <i class="right chevron icon divider"></i>
+  <div class="section">イベント一覧一覧</div>
+</div>
+
+<div class="ui hidden divider"></div>
+<%= render :partial => 'sub_menu' %>
+
+<script type="text/javascript">
+  jQuery(function($){
+    $('.item_description img').css({'max-width' : 50}).height('auto').parent('p').css({'float' : 'left', 'padding' : 5});
+  });
+
+</script>
+
+<div class="ui teal segment" id="search">
+  <div class="ui teal header">イベント検索</div>
+  <%= search_form_for @q, { url: events_path(), class: 'ui form' } do |f| %>
+
+  <div class="fields">
+    <div class="twelve wide field">
+      <label for="q_title_or_body_cont">テキスト検索</label>
+      <%= f.search_field :title_or_content_cont, type: 'text', placeholder: 'イベント一覧タイトル、本文を検索します' %>
+    </div>
+
+    <div class="four wide field">
+      <%= f.label :status %>
+      <%= f.select :status, skal_statuses.invert, {include_blank: '--'} %>
+    </div>
+	</div>
+
+
+	<div class="fields">
+
+	    <div class="field">
+
+			</div>
+
+	</div>
+
+  <%= f.submit '検索', class: 'ui primary button' %>
+  <%= button_tag 'クリア', class: 'ui yellow button', type: :reset %>
+  <% end %>
+</div>
+
+<div class="ui hidden divider"></div>
+<% if @events.present? %>
+
+	<% if @events.respond_to?(:current_page) %>
+	  <%= paginate @events %>
+	<% end %>
+
+	  <table class="ui celled padded table">
+	    <thead>
+	      <tr width="100%">
+	        <th class="center aligned" nowrap="nowrap" width="25%"><%= skal_t_ja('event.title') %></th>
+	        <th class="center aligned" nowrap="nowrap" width="25%">時期</th>
+	        <th class="center aligned" nowrap="nowrap" width="20%"><%= skal_t_ja('event.place') %></th>
+					<th class="center aligned" nowrap="nowrap" width="10%">プレビュー</th>
+					<th class="center aligned" width="10%">編集</th>
+	        <th class="center aligned" nowrap="nowrap" width="10%">削除</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <% @events.each do |event| %>
+	      	<%= render partial: 'index', locals: { event: event } %>
+	      <% end %>
+	    </tbody>
+	  </table>
+
+	<% if @events.respond_to?(:current_page) %>
+	  <%= paginate @events %>
+	<% end %>
+
+<% else %>
+<div class="ui message info">
+  記事はありません
+</div>
+<% end %>
+
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div>
+<%= link_to '新規登録', new_event_path(), class: 'ui primary button' %>

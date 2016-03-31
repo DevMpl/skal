@@ -1,0 +1,60 @@
+<% content_for :inline_js do %>
+<script>
+jQuery(function(){
+	$('select').addClass('ui fluid dropdown').dropdown({placeholder: true});
+	
+})
+
+</script>
+
+<% end %>
+
+<% if @event_category.errors.any? %>
+<div class="ui error message">
+  エラーがあります。確認してください。
+</div>
+<% end %>
+
+<div class="ui hidden divider"></div>
+<div class="form-inputs">
+<div class="ui grid">
+	
+    <div class="column">
+
+      <div class="item_form_base ui red segment">
+        <div class="ui red header">基本情報</div>
+
+        <div class="field">
+            	<%= f.input :name %>
+        </div>
+				
+				<div class="fields">
+							
+			        <div class="eight wide field">
+			            <%= f.input :slug %>
+			        </div>
+				
+			        <div class="eight wide field">
+				          <%= f.input :status do %>
+										<%= f.select :status, skal_statuses.invert, {class: 'ui fluid dropdown'} %>
+				          <% end %>
+			        </div>
+							
+				</div>
+				
+				
+        <div class="field">
+					<%= f.input :note %>
+        </div>
+
+      </div>
+			
+	    <div class="form-actions">
+	      <%= f.button :submit %>
+	    </div>
+			
+
+  </div><!-- /eleven wide column -->
+
+</div><!-- /ui grid -->
+</div><!-- /form-inputs -->

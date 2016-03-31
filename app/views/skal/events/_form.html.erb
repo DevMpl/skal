@@ -1,0 +1,208 @@
+<% content_for :inline_js do %>
+<script>
+
+jQuery(function(){
+	$('[id$=date]').datetimepicker({
+	  lang: 'ja',
+	  step: 10,
+	  format: 'Y-m-d H:i:00'
+	});
+	
+	$('select').addClass('ui fluid dropdown').dropdown({placeholder: true});
+	
+})
+
+</script>
+
+<% end %>
+
+<style type="text/css" media="screen">
+.ui.form textarea:not([rows]) {
+    height: 5em;
+    min-height: 5em;
+    max-height: 24em;
+}
+</style>
+
+<% if @event.errors.any? %>
+<div class="ui error message">
+  エラーがあります。確認してください。
+	
+	<% if @event.errors[:file].present? %>
+		<p><%= @event.errors[:file].first %></p>
+	<% end %>
+	
+</div>
+<% end %>
+
+<div class="ui hidden divider"></div>
+<div class="form-inputs">
+<div class="ui grid">
+    <div class="eleven wide column">
+
+      <div class="item_form_base ui red segment">
+        <div class="ui red header">基本情報</div>
+
+        <div class="fields">
+          <div class="sixteen wide field">
+            	<%= f.input :title %>
+          </div>
+        </div>
+				
+				<div class="fields">
+	        <div class="four wide field">
+	          <%= f.input :prefecture do %>
+							<%= f.select :prefecture, skal_prefecture_lists, {class: 'ui fluid dropdown'} %>
+	          <% end %>
+	        </div>
+				
+	        <div class="fourteen wide field">
+	          <%= f.input :place %>
+	        </div>
+				</div>
+				
+				<div class="fields">
+	        <div class="eight wide field">
+	          <%= f.input :fee %>
+	        </div>
+				
+	        <div class="eight wide field">
+	          <%= f.input :capacity %>
+	        </div>
+					
+				</div>
+				
+        <div class="field">
+          <%= f.input :entry_note %>
+        </div>
+
+				
+        <div class="field">
+          <%= f.input :content, as: :ckeditor, input_html: {ckeditor: {height: 360}} %>
+        </div>
+				
+      </div>
+
+      <div class="item_form_sub ui orange segment">
+        <div class="ui orange header">データ</div>
+					<div class="field">
+			        <div class="field">
+								<%= f.label :file %><br>
+								
+						    <% if @event.file? %>
+						      <div>
+										<%= link_to raw("<i class='ui blue huge file icon'></i>"), @event.file_url.to_s, {target: '_blank'} %><br /><br />
+									</div>
+									<label><%= f.check_box :remove_file, class: 'ui checkbox' %>削除</label>
+								<% end %>
+
+							  <%= f.file_field :file %>
+								<%= f.hidden_field :file_cache %>
+			        </div>
+
+					</div>
+      </div>
+
+      <div class="item_form_sub ui orange segment">
+        <div class="ui orange header">その他</div>
+					
+	        <div class="field">
+	          <%= f.input :lecturers %>
+	        </div>
+					
+	        <div class="field">
+	          <%= f.input :contact %>
+	        </div>
+				
+	        <div class="field">
+	          <%= f.input :organizer %>
+	        </div>
+				
+	        <div class="field">
+	          <%= f.input :homepage %>
+	        </div>
+
+      </div>
+
+
+			
+	      <div class="item_form_map ui blue segment">
+	        <div class="ui blue header">MAP</div>
+	        <div class="fields">
+
+							<div class="four wide field">
+	              
+	            </div>
+							
+							
+	            <div class="twelve wide field">
+	              
+	              <div class="ui action fluid input">
+	                
+	                <button class="ui green right labeled icon button" type="button" id="geo"><i class="search icon"></i>住所から検索</button>
+	              </div>
+								<div>地図を表示する場合は、地名・住所を入力し座標を指定してください</div>
+	              
+	            </div>
+	          
+	        </div>
+	        <div class="fields">
+	          <div class="sixteen wide field">
+	            <div id="map" class="ui segment"></div>
+	          </div>
+	        </div>
+	      </div>
+      
+
+  </div><!-- /eleven wide column -->
+
+  <div class="five wide column">
+		
+    <div class="item_form_category ui green segment">
+       <div class="ui red header">カテゴリ</div>
+        <div class="field">
+		      <%= f.select :event_category_id, Skal::EventCategory.active.map{|s| [s.name, s.id] }, {class: 'ui fluid dropdown'} %>
+        </div>
+    </div>
+		
+
+    <div class="item_form_category ui green segment">
+       <div class="ui red header">日程</div>
+        <div class="field">
+					<%= f.label :started_at %>
+          <%= f.text_field :started_at, value: (f.object.started_at.blank? ? '' : f.object.started_at.strftime('%Y-%m-%d %H:%M:%S')), id: 'date' %>
+        </div>
+				
+        <div class="field">
+					<%= f.label :ended_at %>
+          <%= f.text_field :ended_at, value: (f.object.ended_at.blank? ? '' : f.object.ended_at.strftime('%Y-%m-%d %H:%M:%S')), id: 'date' %>
+        </div>
+
+	      <div class="field">
+	        <%= f.input :date_note %>
+	      </div>
+
+    </div>
+
+    <div class="item_form_date ui teal segment">
+
+      <div class="fields">
+        <div class="field">
+	        <div class="field">
+	          <%= f.input :status do %>
+	          <%= f.select :status, skal_event_statuses.invert, {include_blank: '--'}, {class: 'ui fluid dropdown'} %>
+	          <% end %>
+	        </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+
+  </div><!-- /five wide column -->
+
+  </div><!-- /ui grid -->
+</div><!-- /form-inputs -->

@@ -1,0 +1,16 @@
+<h2 class="ui header">
+  <i class="write icon"></i>
+  イベントカテゴリ新規登録
+</h2>
+
+<div class="ui breadcrumb">
+  <%= link_to raw('<i class="home icon"></i>'), skal_root_path(), class: 'section' %>
+  <i class="right chevron icon divider"></i>
+  <%= link_to raw("イベントカテゴリ一覧"), event_categories_path(), class: 'section' %>
+  <i class="right chevron icon divider"></i>
+  <div class="section">イベントカテゴリ新規登録</div>
+</div>
+
+<%= simple_form_for(@event_category, url: event_categories_path) do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+<% end %>
